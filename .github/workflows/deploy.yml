@@ -24,10 +24,4 @@ jobs:
             docker build -t flight-delay-api .
 
             # Stop any existing containers
-            docker stop $(docker ps -q) || true
-
-            # Run new container with MONGODB_URI env variable
-            docker run -d -p 8000:8000 \
-              -e MONGODB_URI="${{ secrets.MONGODB_URI }}" \
-              --name flight-delay-api \
-              flight-delay-api
+            docker s

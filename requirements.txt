@@ -6,4 +6,5 @@ uvicorn
 joblib
 scikit-learn
 pydantic
-p
+pymongo
+boto3

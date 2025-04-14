@@ -32,19 +32,4 @@ print("✅ MONGODB_URI:", MONGODB_URI)
 class FlightFeatures(BaseModel):
     feature1: float
     feature2: float
-    # add all your actual features here
-
-@app.post("/predict")
-async def predict(data: FlightFeatures, request: Request):
-    features = [[data.feature1, data.feature2]]  # adjust to actual input
-    prediction = model.predict(features)[0]
-
-    # Log to MongoDB
-    logs_collection.insert_one({
-        "timestamp": datetime.utcnow(),
-        "client_ip": request.client.host,
-        "input": data.dict(),
-        "prediction": prediction
-    })
-
-    return {"prediction": prediction}
+    # add all your actu
