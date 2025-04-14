@@ -2,8 +2,7 @@ name: Deploy to EC2
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   deploy:
@@ -17,11 +16,12 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd ~/flight-delay-predictor || git clone https://github.com/ipekkocal/flight-delay-predictor.git && cd flight-delay-predictor
+            cd ~/flight-delay-predictor || git clone git@github.com:ipekkocal/flight-delay-predictor.git && cd flight-delay-predictor
             git pull origin main
 
-            # Rebuild Docker container
             docker build -t flight-delay-api .
-
-            # Stop any existing containers
-            docker s
+            docker stop $(docker ps -q) || true
+            docker run -d -p 8000:8000 \
+              -e MONGODB_URI="${{ secrets.MONGODB_URI }}" \
+              --name flight-delay-api \
+              flight-delay-api
